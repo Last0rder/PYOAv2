@@ -1,7 +1,7 @@
 {
-  "name": "PYOA",
+  "name": "pyoa",
   "version": "1.0.0",
-  "description": "",
+  "description": "program your own adventure",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/Last0rder/PYOA.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nathaniel Shih, Erick Apolo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Last0rder/PYOA/issues"
@@ -23,6 +23,9 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
-    "geo-dist-calc": "^1.1.0"
+    "geo-dist-calc": "^1.1.0",
+    "gps-distance": "0.0.4",
+    "mysql": "^2.12.0",
+    "path": "^0.12.7"
   }
 }
