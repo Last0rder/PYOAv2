@@ -1,12 +1,19 @@
 // ===============================================================================
 // ROUTING
 // ===============================================================================
+var path = require("path");
 
 module.exports = function(app) {
 
-    app.get("/location", function(req, res) {
-        console.log("Check User Location")
+    app.get("/", function(req, res) {
+        res.sendFile(path.join(__dirname + "/../public/html/index.html"));
+        // console.log("Check User Location")
         // Do something here. Not sure just what yet.
     });
 
+
+    app.get("/game/:userid?", function(req, res){
+
+        res.sendFile(path.join(__dirname + "/../public/html/window.html"));
+    })
 };

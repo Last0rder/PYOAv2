@@ -7,16 +7,16 @@
     <title>Historic Hunt</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 
     <!-- Theme CSS -->
-    <link href="css/grayscale.css" rel="stylesheet">
+    <link href="/css/grayscale.css" rel="stylesheet">
 </head>
     <body>
     <!-- Navigation -->
@@ -60,7 +60,7 @@
     </p>
     </div>
     <div class="col-md-4 col-md-offset-1">
-    <img src="img/hoboken.jpg">
+    <img class="img-clue" src="img/hoboken.jpg">
     </div>
 </div>
     <br>
@@ -68,31 +68,6 @@
 <br>
     <br>
 
-<div class="row">
-    <div class="col-md-4 col-md-offset-1">
-    <p>What year was this building founded?</p>
-
-    <div class="radio">
-    <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
-    1986
-    </label>
-    </div>
-
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-    1706
-  </label>
-</div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-    1852
-  </label>
-  </div>
-
-</div>
 <div class="col-md-4 col-md-offset-1">
     <a href="window2.html"><button type="button" class="btn btn-default"> Check In</button></a>
 </div>
@@ -108,6 +83,7 @@
                 console.log(data)
             $('.cluenum').text(data.clue_num);
             $('.message').text(data.message);
+            $(".img-clue").attr("src", data.img)
             });
         
 
