@@ -60,7 +60,7 @@
     </p>
     </div>
     <div class="col-md-4 col-md-offset-1">
-    <img class="img-clue" src="img/hoboken.jpg">
+    <img class="img-clue">
     </div>
 </div>
     <br>
@@ -69,7 +69,7 @@
     <br>
 
 <div class="col-md-4 col-md-offset-1">
-    <a href="window2.html"><button type="button" class="btn btn-default"> Check In</button></a>
+    <button type="button" class="checkin btn btn-default"> Check In</button>
 </div>
 </div>
 
@@ -77,15 +77,71 @@
 </body>
 <script>
 
-    var currentURL = window.location.origin;
+
+    // Figure out who the person is 
+    var myURL = window.location.href;
+    var urlAux = myURL.split('/');
+    var userid = urlAux[4];
+    console.log(urlAux)
+
+    var cluenum = "";
+    
     // AJAX post the data to the friends API. 
-            $.get(currentURL + "/api/afhaque", function(data){
+        var currentURL = window.location.origin;
+
+            $.get(currentURL + "/api/" + userid, function(data){
                 console.log(data)
-            $('.cluenum').text(data.clue_num);
-            $('.message').text(data.message);
-            $(".img-clue").attr("src", data.img)
+                
+                cluenum = data.clue_num;
+
+                $('.cluenum').text(data.clue_num);
+                $('.message').text(data.message);
+                $(".img-clue").attr("src", data.img)
+                $(".img-clue").css("width", 500)
+
             });
         
+    $(".checkin").on("click", function(){
+
+        // Check user's location 
+        myLat = 0;
+        myLng = 0;
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+            
+            myLat = position.coords.latitude;
+            myLng = position.coords.longitude;
+
+        var locationCheck = {
+            userid: userid,
+            lat: myLat,
+            lng: myLng,
+            clue: cluenum
+        }
+
+          // // AJAX post the data to the friends API.
+          $.post(currentURL + "/api/location", locationCheck, function(data) {
+
+            console.log(data);
+
+            if(data.success){
+                alert("Great job! Onto the next clue!")            
+            }
+
+            else {
+                alert("Sorry! You are " + data.distance + " km away. Keep searching!" )
+            }
+
+          });
+
+
+
+        });
+
+        
+
+
+    })
 
 </script>
 </html>

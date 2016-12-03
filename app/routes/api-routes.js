@@ -30,6 +30,15 @@ module.exports = function(app) {
         })
     });
 
+    // Redirect user once they've logged in
+    app.get("/api/login/:userid", function(req, res){
+
+        userid = req.params.userid;
+
+        res.redirect("/game/" + userid);
+
+    })
+
     // Determine which "clue" the user is currently seeking
     app.get("/api/:userid", function(req, res){
 

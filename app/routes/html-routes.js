@@ -16,4 +16,8 @@ module.exports = function(app) {
 
         res.sendFile(path.join(__dirname + "/../public/html/window.html"));
     })
+
+    app.get("/login", function(res, res){
+        res.sendFile(path.join(__dirname + "/../public/html/popout.html"))
+    })
 };
