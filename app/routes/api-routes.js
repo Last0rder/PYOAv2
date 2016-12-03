@@ -14,6 +14,8 @@ module.exports = function(app) {
     // Create new users
     app.post("/api/create", function(req, res){
 
+        // {"userID": "_________"}
+        
         userID = req.body.userID;
         var queryString = squel.insert().into("USERS")
                                         .set("user_id", userID)
@@ -27,6 +29,8 @@ module.exports = function(app) {
             res.json({"success": true})
         })
     });
+
+
 
     // Determine which "clue" the user is currently seeking
     app.get("/api/:userid", function(req, res){
