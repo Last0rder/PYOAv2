@@ -6,7 +6,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 var mysql = require('mysql');
-var orm = require('./app/config/orm.js');
 var distance = require('gps-distance');
 
 // ==============================================================================

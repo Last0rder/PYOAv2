@@ -28,10 +28,62 @@ module.exports = function(app) {
 
             var userClue = data[0].progression;
 
-            // Respond with the Clue Number associated with the user
-            res.json({"progression": parseInt(userClue)})
+            // Run a SECOND query to determine the message associated with that clue.
+            var queryString = squel.select()
+                                    .field("message")
+                                    .field("img")
+                                    .from("CLUES")
+                                    .where("clue_num = '" + userClue + "'").toString()
+
+            // Run the next connection 
+            connection.query(queryString, function(err, data){
+
+                var message = data[0].message;
+                var img = data[0].img
+
+                res.json({"clue_num": userClue, "message": message, "img": img})
+
+            })
+
         })
     })
+
+    app.post("/api/location", function(req, res){
+
+        // User's Current Location, User's Clue Number
+        /*
+            {
+                "lat": XXX,
+                "lng": XXX,
+                "clue": 1
+            }
+        */ 
+        var userData = req.body;
+        currentLat = userData.lat;
+        currentLng = userData.lng
+        currentClue = userData.clue;
+
+        // Identify the lat/lng of the current clue
+        var queryString = squel.select()
+                                .field("lat")
+                                .field("lng")
+                                .from("CLUES")
+                                .where("clue_num = '" + currentClue + "'").toString()
+
+
+        connection.query(queryString, function(err, data){
+
+            var clueLat = data[0].lat;
+            var clueLng = data[0].lng;
+
+            res.json({"clueLat": clueLat, "clueLng": clueLng})
+
+        })
+    })
+
+
+    // app.get("/api/:")
+
 }
 
 //     // 4. GET (/api/:user/cluenum) | Return a JSON that specifies "which clue" the user is currently seeking
