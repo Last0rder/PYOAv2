@@ -11,7 +11,24 @@ var distance = require('gps-distance');
 
 module.exports = function(app) {
 
-    // First Route: Determine which "clue" the user is currently seeking
+    // Create new users
+    app.post("/api/create", function(req, res){
+
+        userID = req.body.userID;
+        var queryString = squel.insert().into("USERS")
+                                        .set("user_id", userID)
+                                        .set("facebook_id", "111111")
+                                        .set("progression", "1").toString();
+
+        console.log(queryString);
+        connection.query(queryString, function (err, data) {
+            if (err) throw err;
+
+            res.json({"success": true})
+        })
+    });
+
+    // Determine which "clue" the user is currently seeking
     app.get("/api/:userid", function(req, res){
 
         // Grab the user id from the URL
