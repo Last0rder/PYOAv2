@@ -23,7 +23,7 @@
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand page-scroll" href="popout.html">
+                <a class="navbar-brand page-scroll" href="/login">
                     Welcome Back 
                 </a></a>
 
@@ -37,7 +37,7 @@
                         <a href="#page-top"></a>
                     </li>
                    
-                         <i class="glyphicon glyphicon-user"></i><a class="page-scroll"> User  01</a>
+                         <i class="glyphicon glyphicon-user"></i> <a class="page-scroll username"> User  01</a>
                     
                      <!-- <li>
                         <a class="page-scroll" href="#download">Download</a>
@@ -94,6 +94,7 @@
                 
                 cluenum = data.clue_num;
 
+                $(".username").text(userid);
                 $('.cluenum').text(data.clue_num);
                 $('.message').text(data.message);
                 $(".img-clue").attr("src", data.img)
@@ -124,8 +125,15 @@
 
             console.log(data);
 
-            if(data.success){
-                alert("Great job! Onto the next clue!")            
+            if(data.success && !data.win){
+                alert("Great job! Onto the next clue!");
+                location.reload();           
+            }
+
+            else if(data.success && data.win){
+                alert("YOU FREAKIN WON!");
+                window.location.replace(currentURL + "/end/");
+
             }
 
             else {

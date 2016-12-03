@@ -17,7 +17,11 @@ module.exports = function(app) {
         res.sendFile(path.join(__dirname + "/../public/html/window.html"));
     })
 
-    app.get("/login", function(res, res){
+    app.get("/login", function(req, res){
         res.sendFile(path.join(__dirname + "/../public/html/popout.html"))
+    })
+
+    app.get("/end", function(req, res){
+        res.sendFile(path.join(__dirname + "/../public/html/end.html"))
     })
 };

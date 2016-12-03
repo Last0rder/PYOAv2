@@ -89,7 +89,7 @@ module.exports = function(app) {
             }
         */ 
         var userData = req.body;
-        var userID = req.body.userID;
+        var userID = req.body.userid;
         var currentLat = userData.lat;
         var currentLng = userData.lng
         var currentClue = parseInt(userData.clue);
@@ -118,6 +118,7 @@ module.exports = function(app) {
                 }
 
                 else {
+                    console.log(userID);
                     // If within range, update the progression data
                     var queryString = squel.update()
                                             .table("USERS")
