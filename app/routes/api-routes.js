@@ -3,6 +3,7 @@
 // ===============================================================================
 var connection = require('../config/connection.js');
 var squel = require("squel");
+var distance = require('gps-distance');
 
 // ===============================================================================
 // ROUTING
@@ -53,15 +54,17 @@ module.exports = function(app) {
         // User's Current Location, User's Clue Number
         /*
             {
+                "userID": XXX, 
                 "lat": XXX,
                 "lng": XXX,
                 "clue": 1
             }
         */ 
         var userData = req.body;
-        currentLat = userData.lat;
-        currentLng = userData.lng
-        currentClue = userData.clue;
+        var userID = req.body.userID;
+        var currentLat = userData.lat;
+        var currentLng = userData.lng
+        var currentClue = parseInt(userData.clue);
 
         // Identify the lat/lng of the current clue
         var queryString = squel.select()
@@ -71,20 +74,36 @@ module.exports = function(app) {
                                 .where("clue_num = '" + currentClue + "'").toString()
 
 
+        // Retrieve the Lat and Longitude of the clue's location
         connection.query(queryString, function(err, data){
 
             var clueLat = data[0].lat;
             var clueLng = data[0].lng;
 
-            res.json({"clueLat": clueLat, "clueLng": clueLng})
+            var distanceAway = distance(clueLat, clueLng, currentLat, currentLng) 
 
+            if (distanceAway < 0.5) {
+
+                var queryString = squel.update()
+                                        .table("USERS")
+                                        .set("progression", currentClue + 1)
+                                        .where("user_id = '" + userID + "'" ).toString();
+
+                connection.query(queryString, function(err, data){
+
+                    res.json({"success": true});
+
+                })
+
+            }
+
+            else {
+                res.json({"sucess": false})
+            }
         })
-    })
 
-
-    // app.get("/api/:")
-
-}
+    });
+}   
 
 //     // 4. GET (/api/:user/cluenum) | Return a JSON that specifies "which clue" the user is currently seeking
 //     app.get("/api/:user/cluenum", function(req, res) {
