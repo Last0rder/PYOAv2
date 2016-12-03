@@ -1,20 +1,26 @@
 var connection = require('./connection.js');
+var squel = require("squel");
 
 // object relational mapper (ORM)
 var orm = {
 	
-	// Finds which clue the player is currently on, which is stored in the PLAYERS database.
+	// Finds which clue the player is currently on, which is stored in the USERS table.
 	findClueNum: function (userID) {
-		// craft the query string based on the userID pulled from URL req.params
-		var queryString = 'SELECT * FROM PLAYERS WHERE id = ' + userID;
-		// connection query
+
+		var queryString = squel.select().field("progression")
+							   .from("USERS")
+							   .where("user_id = '" + userID + "'").toString();
+
 		connection.query(queryString, function (err, data) {
-		// store the user's progression/clue number into var userClue for further use
-		var userClue = data.progression;
-		// console.log to test
-		console.log(data);
-		console.log(userClue);
+
+			if (err) throw err;
+
+			var userClue = data[0].progression;
+
+			return(userClue);
+
 		})
+
 	},
 	
 
